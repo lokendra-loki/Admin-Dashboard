@@ -1,14 +1,16 @@
 import Chart from "../../components/chart/Chart";
 import FeaturedInfo from "../../components/featuredInfo/FeaturedInfo";
 import "./home.css";
-// import { userData } from "../../dummyData";
 import WidgetSm from "../../components/widgetSm/WidgetSm";
 import WidgetLg from "../../components/widgetLg/WidgetLg";
 import { useState, useEffect, useMemo } from "react";
 import axios from "axios";
 
 
+
 export default function Home() {
+
+  //Making graph according to new user 
   const MONTHS = useMemo(() => ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"], [])
 
   const [userStats, setUserStats] = useState([])
@@ -21,9 +23,13 @@ export default function Home() {
           }
         })
         // console.log(res)
+
+        //mongo db ma manually data add garda array order ma hudaina so sort garey ko
+        //naturally data add garda order ma nai hunxa
         const statsList = res.data.sort(function (a, b) {
           return a._id - b._id;
         })
+
         statsList.map((item) => setUserStats(prev => [...prev, { name: MONTHS[item._id - 1], "New User": item.total }]))
       } catch (error) {
         console.log(error)
@@ -32,9 +38,6 @@ export default function Home() {
     getStats()
   }, [MONTHS])
   // console.log(userStats)
-
-
-
 
 
 
