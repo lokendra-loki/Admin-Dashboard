@@ -40,9 +40,9 @@ export default function WidgetSm() {
       <ul className="widgetSmList">
 
         {/* newUser map------------- */}
-        {newUsers.map((user) => (
+        {newUsers.map((user, key) => (
 
-          <li className="widgetSmListItem">
+          <li className="widgetSmListItem" key={key}>
             <img src={user.profilePic || "https://i.pinimg.com/736x/db/70/dc/db70dc468af8c93749d1f587d74dcb08.jpg"} alt="" className="widgetSmImg" />
 
             <div className="widgetSmUser">

@@ -74,6 +74,10 @@ function App() {
                 <ProductList />
               </Route>
 
+              <Route path="/product/:Id">
+                <Product />
+              </Route>
+
               {/* <Route path="/movie/:movieId">
                 <Movie />
               </Route> */}
@@ -81,6 +85,10 @@ function App() {
               {/* <Route path="/newMovie">
                 <NewMovie />
               </Route> */}
+
+               <Route path="/createNewMovie">
+                <NewProduct />
+              </Route> 
 
 
               {/* <Route path="/lists">

@@ -62,9 +62,17 @@ export default function ProductList() {
       field: "action", headerName: "Action", width: 130, renderCell: (params) => {
         return (
           <>
-            <Link to={"/product/" + params.row.id}>
+
+            {/* <Link to={"/product/" + params.row._id}>
+              <button className="productListEdit">Edit</button>
+            </Link> */}
+
+
+            {/* passing data to product page  with Links*/}
+            <Link to={{pathname:"/product/" + params.row._id,movie:params.row}}>
               <button className="productListEdit">Edit</button>
             </Link>
+
 
             <DeleteOutline className="productListDelete" onClick={() => handleDelete(params.row._id)} />
           </>
