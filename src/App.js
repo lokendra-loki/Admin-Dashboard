@@ -16,6 +16,7 @@ import { useContext } from 'react'
 
 
 
+
 function App() {
 
   //just calling the user that has been saved in our local storage
@@ -27,8 +28,7 @@ function App() {
     <Router>
       <Switch>
         <Route path="/login">{user ? <Redirect to="/" /> : <Login />}</Route>
-        <Route path="/register"> <Register /></Route>
-
+        {/* <Route path="/register"> <Register /></Route> */}
 
 
 
@@ -37,9 +37,14 @@ function App() {
             <Topbar />
             <div className="container">
               <Sidebar />
-              <Route exact path="/">
-                <Home />
-              </Route>
+
+              {/* <Route exact path="/"> {!user ? <Redirect to="/login" /> : <Home />} </Route> */}
+              <Route exact path="/"> {!user ? <Login /> : <Home />} </Route>
+
+
+
+
+
               <Route path="/users">
                 <UserList />
               </Route>
@@ -53,7 +58,7 @@ function App() {
                 <NewUser />
               </Route>
 
-              
+
 
 
 
@@ -64,21 +69,35 @@ function App() {
               {/* <Route path="/movies">
                 <MovieList />
               </Route> */}
+
+              <Route path="/movies">
+                <ProductList />
+              </Route>
+
               {/* <Route path="/movie/:movieId">
                 <Movie />
-              </Route>
-              <Route path="/newMovie">
+              </Route> */}
+
+              {/* <Route path="/newMovie">
                 <NewMovie />
-              </Route>
-              <Route path="/lists">
+              </Route> */}
+
+
+              {/* <Route path="/lists">
                 <ListList />
-              </Route>
-              <Route path="/list/:listId">
+              </Route> */}
+
+
+              {/* <Route path="/list/:listId">
                 <List />
-              </Route>
-              <Route path="/newlist">
+              </Route> */}
+
+
+              {/* <Route path="/newlist">
                 <NewList />
               </Route> */}
+
+
             </div>
           </>
         )}
