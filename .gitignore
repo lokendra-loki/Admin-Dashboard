@@ -11,8 +11,6 @@
 # production
 /build
 
-#context
-/context
 
 # misc
 .DS_Store
