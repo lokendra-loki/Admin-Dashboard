@@ -1,6 +1,8 @@
 import "./newProduct.css";
 import { useState } from "react";
 import storage from "../../firebase";
+import { ref, uploadBytesResumable, getDownloadURL } from "@firebase/storage";
+
 
 
 
@@ -17,8 +19,7 @@ export default function NewProduct() {
   const [trailer, setTrailer] = useState(null)
   const [video, setVideo] = useState(null)
 
-  const [uploaded, setUploaded] = useState(0)//how many file uploaded at begining it is zero at begining
-
+  const [uploaded, setUploaded] = useState(0)//how many file uploaded. at begining it is zero 
 
 
 
@@ -27,12 +28,20 @@ export default function NewProduct() {
     const value = e.target.value
     setMovie({ ...movie, [e.target.name]: value })
   }
-  // console.log(img)
+  console.log(img)
 
 
+
+
+  //------------------------------------------------------
   const upload = (items) => {
     items.forEach(item => {
-      const uploadTask = storage.ref(`/items/${item.file.name}`).put(item)
+      // const uploadTask = storage.ref(`/items/${item.file.name}`).put(item);//uploading file to firebase storage
+      const fileName = new Date().getTime() + item.label + item.file.name;
+      const storageref = ref(storage, `/items/${fileName}`);
+      const uploadTask = uploadBytesResumable(storageref, item.file);
+
+      //for percentage of uploading
       uploadTask.on("state_changes", snapshot => {
         const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100)
         console.log("upload is" + progress + "% done");
@@ -40,17 +49,22 @@ export default function NewProduct() {
         console.log(error)
       }
         , () => {
-          uploadTask.snapshot.ref.getDownloadURL().then(url => {
-            setMovie(prev => ({ ...prev, [item.label]: url }))
-          }
-          )
+          // uploadTask.snapshot.ref.getDownloadURL().then(url => {
+          //   setMovie(prev => ({ ...prev, [item.label]: url }))
+          // })
+          getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+            setMovie((prev) => {
+              return { ...prev, [item.label]: url };
+            });
+          })
           setUploaded(prev => prev + 1)
+          
 
         }
       )
     })
   }
-
+  console.log(uploaded)
 
 
   const handleUpload = (e) => {
@@ -62,18 +76,8 @@ export default function NewProduct() {
       { file: trailer, label: trailer },
       { file: video, label: video },
     ])
-
-
   }
-
-
-
-
-
-
-
-
-
+  console.log(movie)
 
 
 
@@ -156,7 +160,7 @@ export default function NewProduct() {
             <option value="true">Yes</option>
           </select>
 
-  
+
         </div>
         {uploaded === 5 ? (
           <button className="addProductButton">Create</button>
@@ -164,11 +168,20 @@ export default function NewProduct() {
           <button className="addProductButton" onClick={handleUpload} >Upload</button>
         )
         }
-
-
-
-
       </form>
     </div>
   );
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
