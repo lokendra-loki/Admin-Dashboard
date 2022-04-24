@@ -1,7 +1,9 @@
 import "./newProduct.css";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import storage from "../../firebase";
 import { ref, uploadBytesResumable, getDownloadURL } from "@firebase/storage";
+import { createMovie } from "../../context/movieContext/apiCalls";
+import { MovieContext } from "../../context/movieContext/MovieContext";
 
 
 
@@ -22,6 +24,7 @@ export default function NewProduct() {
   const [uploaded, setUploaded] = useState(0)//how many file uploaded. at begining it is zero 
 
 
+  const { dispatch } = useContext(MovieContext)
 
   //for text---------------------
   const handleChange = (e) => {
@@ -42,7 +45,7 @@ export default function NewProduct() {
       const uploadTask = uploadBytesResumable(storageref, item.file);
 
       //for percentage of uploading
-      uploadTask.on("state_changes", snapshot => {
+      uploadTask.on("state_changed", snapshot => {
         const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100)
         console.log("upload is" + progress + "% done");
       }, error => {
@@ -58,13 +61,13 @@ export default function NewProduct() {
             });
           })
           setUploaded(prev => prev + 1)
-          
+
 
         }
       )
     })
   }
-  console.log(uploaded)
+  // console.log(uploaded)
 
 
   const handleUpload = (e) => {
@@ -77,7 +80,16 @@ export default function NewProduct() {
       { file: video, label: video },
     ])
   }
-  console.log(movie)
+  // console.log(movie)
+
+
+  //finally sending to database
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    //create movie apiCalls
+    createMovie(movie, dispatch)
+  }
+
 
 
 
@@ -163,7 +175,7 @@ export default function NewProduct() {
 
         </div>
         {uploaded === 5 ? (
-          <button className="addProductButton">Create</button>
+          <button className="addProductButton" onClick={handleSubmit}>Create</button>
         ) : (
           <button className="addProductButton" onClick={handleUpload} >Upload</button>
         )

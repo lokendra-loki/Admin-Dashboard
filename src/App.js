@@ -21,6 +21,8 @@ function App() {
 
   //just calling the user that has been saved in our local storage
   const { user } = useContext(AuthContext)
+  console.log(user)
+
 
 
   return (
