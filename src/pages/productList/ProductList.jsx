@@ -6,7 +6,7 @@ import { DeleteOutline } from "@material-ui/icons";
 import { Link } from "react-router-dom";
 import { useContext, useEffect } from "react";
 import { MovieContext } from "../../context/movieContext/MovieContext";
-import { getMovies } from "../../context/movieContext/apiCalls"
+import { deleteMovie, getMovies } from "../../context/movieContext/apiCalls"
 
 
 
@@ -24,13 +24,15 @@ export default function ProductList() {
 
 
 
-
+  //DELETING A MOVIE-------------
   const handleDelete = (id) => {
-    // setData(data.filter((item) => item.id !== id));
+    deleteMovie(id, dispatch)
+    window.location.reload()
   };
+  //-----------------------------
 
 
-  console.log(movies)
+  // console.log(movies)
 
   const columns = [
     { field: "_id", headerName: "ID", width: 180 },
@@ -54,7 +56,7 @@ export default function ProductList() {
     { field: "isSeries", headerName: "isSeries", width: 130 },
 
 
-    
+
 
     {
       field: "action", headerName: "Action", width: 130, renderCell: (params) => {
@@ -64,7 +66,7 @@ export default function ProductList() {
               <button className="productListEdit">Edit</button>
             </Link>
 
-            <DeleteOutline className="productListDelete" onClick={() => handleDelete(params.row.id)} />
+            <DeleteOutline className="productListDelete" onClick={() => handleDelete(params.row._id)} />
           </>
         );
       },

@@ -24,6 +24,30 @@ const MovieReducer = (state, action) => {
                 error: true,
             }
 
+        //DELETE MOVIE------------>
+        case "DELETE_MOVIES_START":
+            return {
+                ...state,//At beginning we are not gonna change anything inside our movies array so current state will be the same
+                isFetching: true,
+                error: false
+            }
+
+        case "DELETE_MOVIES_SUCCESS":
+            return {
+                movies: state.movies.filter((movie) => MovieReducer._id !== action.payload),
+                //it gonna look at state.movies array and filter out the movie that has the same id as the one we are deleting and if movie id is not equal to the id we are deleting it will return that movie
+                isFetching: false,
+                error: false,
+            }
+
+        case "DELETE_MOVIES_FAILURE":
+            return {
+                ...state,
+                isFetching: false,
+                error: true,
+            }
+        //--------------------------->
+
 
         default:
             return { ...state }
