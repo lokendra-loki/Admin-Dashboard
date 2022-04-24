@@ -16,3 +16,14 @@ export const loginFailure = () => ({
     type: "LOGIN_FAILURE"
 
 })
+
+
+
+//For LogOut----------------------------------------------->
+//we are just gonnna remove/ the user from the state so the user will be null again
+export const logout = () => ({
+    type: "LOGOUT"
+
+})
+
+

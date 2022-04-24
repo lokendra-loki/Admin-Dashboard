@@ -1,8 +1,27 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./topbar.css";
 import { NotificationsNone, Language, Settings } from "@material-ui/icons";
+import { AuthContext } from "../../context/authContext/AuthContext";
+
+
+
+
 
 export default function Topbar() {
+
+  //LogOut functionality
+  const { dispatch, user } = useContext(AuthContext)
+
+  const handleLogOut = (e) => {
+    dispatch({ type: "LOGOUT" })
+
+    //after logout we are going to redirect to login page
+    window.location.replace("/login")
+
+    
+  }
+
+
   return (
     <div className="topbar">
       <div className="topbarWrapper">
@@ -10,6 +29,12 @@ export default function Topbar() {
           <span className="logo">lamaadmin</span>
         </div>
         <div className="topRight">
+
+
+          <span className="topBarLogOut" onClick={handleLogOut} >{user && "LOGOUT"}</span>
+
+
+
           <div className="topbarIconContainer">
             <NotificationsNone />
             <span className="topIconBadge">2</span>

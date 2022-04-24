@@ -23,10 +23,15 @@ function App() {
 
 
   return (
-    
+
     <Router>
       <Switch>
         <Route path="/login">{user ? <Redirect to="/" /> : <Login />}</Route>
+        <Route path="/register"> <Register /></Route>
+
+
+
+
         {user && (
           <>
             <Topbar />
@@ -41,9 +46,21 @@ function App() {
               <Route path="/user/:userId">
                 <User />
               </Route>
+
+
+
               <Route path="/newUser">
                 <NewUser />
               </Route>
+
+              
+
+
+
+
+
+
+
               {/* <Route path="/movies">
                 <MovieList />
               </Route> */}
@@ -66,7 +83,7 @@ function App() {
           </>
         )}
       </Switch>
-    </Router>
+    </Router >
   );
 }
 

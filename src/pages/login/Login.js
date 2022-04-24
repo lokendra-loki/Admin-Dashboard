@@ -3,6 +3,7 @@ import "./login.scss"
 import { useState } from 'react'
 import { AuthContext } from '../../context/authContext/AuthContext'
 import { login } from '../../context/authContext/apiCalls'
+import { Link } from 'react-router-dom'
 
 
 
@@ -40,7 +41,9 @@ function Login() {
                     <span className='forgotPassword'>Forgot Password ?</span>
                 </div>
 
-                <button className='loginBut'>Register</button>
+               <Link to="/register">
+               <button className='loginBut'>Register</button>
+               </Link>
 
             </form>
         </div>

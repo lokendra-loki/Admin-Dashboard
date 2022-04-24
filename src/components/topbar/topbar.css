@@ -27,6 +27,15 @@
     align-items: center;
 }
 
+.topBarLogOut{
+  margin-right: 28px;
+  font-size: 20px;
+  font-weight: 600;
+  cursor: pointer;
+  color:rgb(57, 57, 57)
+  
+}
+
 .topbarIconContainer {
   position: relative;
   cursor: pointer;
